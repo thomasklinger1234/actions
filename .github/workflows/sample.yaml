@@ -37,7 +37,7 @@ jobs:
       - name: DEBUG
         run: |
           echo "IMAGE_URI=${{ env.image_uri }}"
-          echo "IMAGE_URI=${{ env.outputs) }}"
+          echo "IMAGE_URI=${{ env }}"
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST_ROOT"
