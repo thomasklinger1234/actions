@@ -22,7 +22,7 @@ jobs:
 
       - name: "DOCKER_LINT"
         id: "DOCKER_LINT"
-        uses: ./actions/dockerlint/action.yml
+        uses: ./dockerlint/action.yml
         with:
           image_dockerfile: "sample/Dockerfile"
 
