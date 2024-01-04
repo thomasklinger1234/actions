@@ -13,12 +13,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: GIT_CHECKOUT
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        ref: "${{ inputs.git_revision }}"
-
     - name: DOCKER_SCAN_WITH_TRIVY
       uses: aquasecurity/trivy-action@master
       with:

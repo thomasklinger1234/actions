@@ -4,10 +4,6 @@ name: dockerlint
 description: "Docker Lint via Hadolint"
 
 inputs:
-  git_revision:
-    required: false
-    type: string
-    default: HEAD
   image_dockerfile:
     required: true
     type: string
