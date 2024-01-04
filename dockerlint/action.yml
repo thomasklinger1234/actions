@@ -1,0 +1,40 @@
+---
+name: dockerlint
+
+on:
+  workflow_call:
+    inputs:
+      git_revision:
+        required: false
+        type: string
+        default: HEAD
+      image_dockerfile:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: false
+
+jobs:
+  default:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GIT_CHECKOUT
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "${{ inputs.git_revision }}"
+
+      - name: DOCKER_LINT
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+           dockerfile: ${{ inputs.image_dockerfile }}
+           format: sarif
+           output-file: ${{ inputs.image_dockerfile }}/hadolint-results.sarif
+           no-fail: true
+
+      - name: DOCKER_LINT_UPLOAD_RESULTS
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: ${{ inputs.image_dockerfile }}/hadolint-results.sarif

@@ -1,0 +1,12 @@
+---
+schemaVersion: 2.0.0
+
+metadataTest:
+  exposedPorts: [ ]
+  volumes: [ ]
+  entrypoint: [ "/opt/app/bootstrap" ]
+
+fileExistenceTests:
+  - name: 'entrypoint'
+    path: '/opt/app/bootstrap'
+    shouldExist: true
