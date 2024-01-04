@@ -13,6 +13,13 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: DOCKER_SCAN_WITH_TRIVY_ENSURE_TRIVYIGNORE
+      shell: bash
+      run: |
+        if [ ! -f ".trivyignore" ]; then
+          touch .trivyignore
+        fi
+
     - name: DOCKER_SCAN_WITH_TRIVY
       uses: aquasecurity/trivy-action@master
       with:
