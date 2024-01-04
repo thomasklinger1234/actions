@@ -11,18 +11,16 @@ inputs:
   image_dockerfile:
     required: true
     type: string
+  upload:
+    required: false
+    type: boolean
+    default: false
 
 outputs: {}
 
 runs:
   using: composite
   steps:
-    - name: GIT_CHECKOUT
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        ref: "${{ inputs.git_revision }}"
-
     - name: DOCKER_LINT
       uses: hadolint/hadolint-action@v3.1.0
       with:
@@ -33,7 +31,7 @@ runs:
 
     - name: DOCKER_LINT_UPLOAD_RESULTS
       uses: github/codeql-action/upload-sarif@v2
-      if: always()
+      if: inputs.upload
       continue-on-error: true
       with:
         sarif_file: hadolint-results.sarif
