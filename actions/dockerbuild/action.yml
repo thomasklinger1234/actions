@@ -36,6 +36,7 @@ runs:
       id: DOCKER_BUILD
       shell: bash
       run: |
+        IMAGE_DOCKERFILE="${{ inputs.image_dockerfile }}"
         IMAGE_VERSION="v$(date +%Y%m%d)-$IMAGE_REVISION"
         IMAGE_VERSION_FILE="$(dirname $IMAGE_DOCKERFILE)/IMAGE_VERSION"
         
@@ -62,7 +63,6 @@ runs:
 
     - name: DOCKER_BUILD
       uses: docker/build-push-action@v5
-      continue-on-error: true
       with:
         context: "${{ inputs.image_context }}"
         file: "${{ inputs.image_dockerfile }}"
