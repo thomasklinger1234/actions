@@ -20,6 +20,7 @@ runs:
     - name: COSIGN_SIGN
       env:
         COSIGN_EXPERIMENTAL: "1"
+      shell: bash
       run: |
         IMAGE_DIGEST=$(crane digest ${{ inputs.image_ref }})
         IMAGE_REF="${{ inputs.image_ref }}"
