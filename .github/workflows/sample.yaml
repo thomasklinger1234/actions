@@ -34,11 +34,6 @@ jobs:
           image_context: "sample"
           image_name: "ghcr.io/${{ github.event.repository.name }}/sample"
 
-      - name: DEBUG
-        run: |
-          echo "IMAGE_URI=${{ env.image_uri }}"
-          echo "IMAGE_URI=${{ env }}"
-
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST_ROOT"
         uses: ./actions/dockertest

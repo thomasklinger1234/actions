@@ -2,13 +2,13 @@
 name: dockerscan
 
 inputs:
-  git_revision:
-    required: false
-    type: string
-    default: HEAD
   image_ref:
     required: true
     type: string
+  upload:
+    required: false
+    type: boolean
+    default: false
 
 runs:
   using: composite
@@ -27,7 +27,8 @@ runs:
 
     - name: DOCKER_SCAN_WITH_TRIVY_UPLOAD_RESULTS
       uses: github/codeql-action/upload-sarif@v2
-      if: always()
+      if: inputs.upload
+      continue-on-error: true
       with:
         sarif_file: 'trivy-results.sarif'
 
