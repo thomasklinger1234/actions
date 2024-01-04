@@ -38,23 +38,23 @@ jobs:
         id: "DOCKER_TEST"
         uses: ./actions/dockertest
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
           cst_config: "sample/containertest.yaml"
 
       - name: "DOCKER_SCAN"
         id: "DOCKER_SCAN"
         uses: ./actions/dockerscan
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
 
       - name: "DOCKER_RELEASE"
         id: "DOCKER_RELEASE"
         uses: ./actions/dockerrelease
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
 
       - name: "DOCKER_SIGN"
         id: "DOCKER_SIGN"
         uses: ./actions/dockersign
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
