@@ -39,7 +39,7 @@ runs:
         IMAGE_CONTEXT="${{ inputs.image_context }}"
         IMAGE_ARGS="IMAGE_VERSION=$IMAGE_VERSION,IMAGE_REVISION=$IMAGE_REVISION"
         IMAGE_NAME="${{ inputs.image_name }}"
-        IMAGE_VERSION="v$(date +%Y+%m%d)-$IMAGE_REVISION"
+        IMAGE_VERSION="v$(date +%Y%m%d)-$IMAGE_REVISION"
         IMAGE_VERSION_FILE="$(dirname $IMAGE_DOCKERFILE)/IMAGE_VERSION"
         
         if [ -f "$IMAGE_VERSION_FILE" ]; then
