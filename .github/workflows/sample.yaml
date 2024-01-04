@@ -34,6 +34,10 @@ jobs:
           image_context: "sample"
           image_name: "ghcr.io/${{ github.event.repository.name }}/sample"
 
+      - name: DEBUG
+        run: |
+          echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST"
         uses: ./actions/dockertest
