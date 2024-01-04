@@ -21,13 +21,13 @@ jobs:
           fetch-depth: 0
 
       - name: "DOCKER_LINT"
-        id: "DOCKER_LINT"
+        id: "DOCKER_LINT_ROOT"
         uses: ./actions/dockerlint
         with:
           image_dockerfile: "sample/Dockerfile"
 
       - name: "DOCKER_BUILD"
-        id: "DOCKER_BUILD"
+        id: "DOCKER_BUILD_ROOT"
         uses: ./actions/dockerbuild
         with:
           image_dockerfile: "sample/Dockerfile"
@@ -36,30 +36,30 @@ jobs:
 
       - name: DEBUG
         run: |
-          echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs.image_uri }}"
-          echo "IMAGE_URI=${{ toJSON(steps.DOCKER_BUILD.outputs) }}"
+          echo "IMAGE_URI=${{ steps.DOCKER_BUILD_ROOT.outputs.image_uri }}"
+          echo "IMAGE_URI=${{ toJSON(steps.DOCKER_BUILD_ROOT.outputs) }}"
 
       - name: "DOCKER_TEST"
-        id: "DOCKER_TEST"
+        id: "DOCKER_TEST_ROOT"
         uses: ./actions/dockertest
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
+          image_ref: "${{ steps.DOCKER_BUILD_ROOT.outputs.image_uri }}"
           cst_config: "sample/containertest.yaml"
 
       - name: "DOCKER_SCAN"
-        id: "DOCKER_SCAN"
+        id: "DOCKER_SCAN_ROOT"
         uses: ./actions/dockerscan
         with:
           image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
 
       - name: "DOCKER_RELEASE"
-        id: "DOCKER_RELEASE"
+        id: "DOCKER_RELEASE_ROOT"
         uses: ./actions/dockerrelease
         with:
           image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
 
       - name: "DOCKER_SIGN"
-        id: "DOCKER_SIGN"
+        id: "DOCKER_SIGN_ROOT"
         uses: ./actions/dockersign
         with:
           image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"

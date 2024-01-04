@@ -15,10 +15,13 @@ inputs:
 outputs:
   image_name:
     description: "Image name"
+    value: "${{ steps.DOCKER_BUILD.image_name }}"
   image_version:
     description: "Image version"
+    value: "${{ steps.DOCKER_BUILD.image_version }}"
   image_uri:
     description: "Image URI (name:tag)"
+    value: "${{ steps.DOCKER_BUILD.image_uri }}"
 
 runs:
   using: composite
