@@ -36,30 +36,30 @@ jobs:
 
       - name: DEBUG
         run: |
-          echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs.image_uri }}"
           echo "IMAGE_URI=${{ toJSON(steps.DOCKER_BUILD.outputs) }}"
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST"
         uses: ./actions/dockertest
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
           cst_config: "sample/containertest.yaml"
 
       - name: "DOCKER_SCAN"
         id: "DOCKER_SCAN"
         uses: ./actions/dockerscan
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
 
       - name: "DOCKER_RELEASE"
         id: "DOCKER_RELEASE"
         uses: ./actions/dockerrelease
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"
 
       - name: "DOCKER_SIGN"
         id: "DOCKER_SIGN"
         uses: ./actions/dockersign
         with:
-          image_ref: "${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          image_ref: "${{ steps.DOCKER_BUILD.outputs.image_uri }}"

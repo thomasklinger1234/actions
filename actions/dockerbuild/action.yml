@@ -13,11 +13,11 @@ inputs:
     type: string
 
 outputs:
-  IMAGE_NAME:
+  image_name:
     description: "Image name"
-  IMAGE_VERSION:
+  image_version:
     description: "Image version"
-  IMAGE_URI:
+  image_uri:
     description: "Image URI (name:tag)"
 
 runs:
@@ -58,7 +58,10 @@ runs:
           --tag $IMAGE_NAME:$IMAGE_VERSION \
           -f $IMAGE_DOCKERFILE $IMAGE_CONTEXT
         
-        echo "IMAGE_VERSION=$IMAGE_VERSION" >> $GITHUB_OUTPUT
-        echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_OUTPUT
-        echo "IMAGE_URI=$IMAGE_NAME:$IMAGE_VERSION" >> $GITHUB_OUTPUT
+        echo "image_version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
+        echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT
+        echo "image_uri=$IMAGE_NAME:$IMAGE_VERSION" >> $GITHUB_OUTPUT
+        
+        echo "GITHUB OUTPUT:"
+        echo "$GITHUB_OUTPUT"
 
