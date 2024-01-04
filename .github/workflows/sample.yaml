@@ -15,6 +15,12 @@ jobs:
   default:
     runs-on: ubuntu-latest
     steps:
+      - name: GIT_CHECKOUT
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: "${{ github.sha }}"
+
       - name: "DOCKER_LINT"
         id: "DOCKER_LINT"
         uses: ./actions/dockerlint/action.yml
