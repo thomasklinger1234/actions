@@ -32,38 +32,16 @@ runs:
     - name: DOCKER_BUILDX_SETUP
       uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226
 
-    - name: DOCKER_BUILD
+    - name: DOCKER_BUILD_VERSIONING
       id: DOCKER_BUILD
       shell: bash
       run: |
-        IMAGE_AUTHORS="ShopEntrance <shozu@otto.de>"
-        IMAGE_VENDOR="$IMAGE_AUTHORS"
-        IMAGE_VERSION="${{ github.sha }}"
-        IMAGE_REVISION="${{ github.sha }}"
-        IMAGE_SOURCE="https://github.com/${{ github.repository }}"
-        
-        IMAGE_DOCKERFILE="${{ inputs.image_dockerfile }}"
-        IMAGE_CONTEXT="${{ inputs.image_context }}"
-        IMAGE_ARGS="IMAGE_VERSION=$IMAGE_VERSION,IMAGE_REVISION=$IMAGE_REVISION"
-        IMAGE_NAME="${{ inputs.image_name }}"
         IMAGE_VERSION="v$(date +%Y%m%d)-$IMAGE_REVISION"
         IMAGE_VERSION_FILE="$(dirname $IMAGE_DOCKERFILE)/IMAGE_VERSION"
         
         if [ -f "$IMAGE_VERSION_FILE" ]; then
           IMAGE_VERSION="$(cat $IMAGE_VERSION_FILE)"
         fi
-        
-        docker build \
-          --rm \
-          --build-arg $IMAGE_ARGS \
-          --label org.opencontainers.image.authors="$IMAGE_AUTHORS" \
-          --label org.opencontainers.image.vendor="$IMAGE_VENDOR" \
-          --label org.opencontainers.image.version="$IMAGE_VERSION" \
-          --label org.opencontainers.image.revision="$IMAGE_REVISION" \
-          --label org.opencontainers.image.source="$IMAGE_SOURCE" \
-          --tag $IMAGE_NAME:latest \
-          --tag $IMAGE_NAME:$IMAGE_VERSION \
-          -f $IMAGE_DOCKERFILE $IMAGE_CONTEXT
         
         echo "image_version=$IMAGE_VERSION" >> $GITHUB_OUTPUT
         echo "image_name=$IMAGE_NAME" >> $GITHUB_OUTPUT
@@ -72,14 +50,17 @@ runs:
         echo "GITHUB OUTPUT:"
         echo "$(cat $GITHUB_OUTPUT)"
         
+        # IMPORTANT:
         # when referencing local actions $GITHUB_OUTPUT is not working.
+        # remote users can use outputs as usual.
+        #
         # see https://github.com/actions/runner/issues/2009
+        
         echo "image_version=$IMAGE_VERSION" >> $GITHUB_ENV
         echo "image_name=$IMAGE_NAME" >> $GITHUB_ENV
         echo "image_uri=$IMAGE_NAME:$IMAGE_VERSION" >> $GITHUB_ENV
 
-    # EXPERIMENTAL: uses the provided github action by docker
-    - name: DOCKER_BUILD_EXPERIMENTAL
+    - name: DOCKER_BUILD
       uses: docker/build-push-action@v5
       continue-on-error: true
       with:
