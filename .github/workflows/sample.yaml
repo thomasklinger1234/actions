@@ -52,6 +52,7 @@ jobs:
         uses: ./actions/dockerrelease
         with:
           image_ref: "${{ env.image_uri }}"
+          token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "DOCKER_SIGN"
         id: "DOCKER_SIGN_ROOT"

@@ -5,6 +5,9 @@ inputs:
   image_ref:
     required: true
     type: string
+  token:
+    required: true
+    type: string
 
 outputs: {}
 
@@ -19,7 +22,7 @@ runs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.token }}
 
     - name: DOCKER_PUSH
       shell: bash
