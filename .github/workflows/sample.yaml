@@ -23,13 +23,13 @@ jobs:
 
       - name: "DOCKER_LINT"
         id: "DOCKER_LINT"
-        uses: ./dockerlint/action.yml
+        uses: ./actions/dockerlint/action.yml
         with:
           image_dockerfile: "sample/Dockerfile"
 
       - name: "DOCKER_BUILD"
         id: "DOCKER_BUILD"
-        uses: ./dockerbuild/action.yml
+        uses: ./actions/dockerbuild/action.yml
         with:
           image_dockerfile: "sample/Dockerfile"
           image_context: "sample"
@@ -37,25 +37,25 @@ jobs:
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST"
-        uses: ./dockertest/action.yml
+        uses: ./actions/dockertest/action.yml
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
           cst_config: "sample/containertest.yaml"
 
       - name: "DOCKER_SCAN"
         id: "DOCKER_SCAN"
-        uses: ./dockerscan/action.yml
+        uses: ./actions/dockerscan/action.yml
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
 
       - name: "DOCKER_RELEASE"
         id: "DOCKER_RELEASE"
-        uses: ./dockerrelease/action.yml
+        uses: ./actions/dockerrelease/action.yml
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
 
       - name: "DOCKER_SIGN"
         id: "DOCKER_SIGN"
-        uses: ./dockersign/action.yml
+        uses: ./actions/dockersign/action.yml
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
