@@ -28,11 +28,11 @@ runs:
       with:
          dockerfile: ${{ inputs.image_dockerfile }}
          format: sarif
-         output-file: ${{ inputs.image_dockerfile }}/hadolint-results.sarif
+         output-file: ${{ inputs.image_dockerfile }}.hadolint-results.sarif
          no-fail: true
 
     - name: DOCKER_LINT_UPLOAD_RESULTS
       uses: github/codeql-action/upload-sarif@v2
       if: always()
       with:
-        sarif_file: ${{ inputs.image_dockerfile }}/hadolint-results.sarif
+        sarif_file: ${{ inputs.image_dockerfile }}.hadolint-results.sarif
