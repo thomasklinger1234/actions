@@ -14,6 +14,7 @@ permissions:
 jobs:
   default:
     runs-on: ubuntu-latest
+    secrets: inherit
     steps:
       - name: "DOCKER_LINT"
         id: "DOCKER_LINT"
@@ -24,7 +25,6 @@ jobs:
       - name: "DOCKER_BUILD"
         id: "DOCKER_BUILD"
         uses: ./actions/dockerbuild/action.yml
-        secrets: inherit
         with:
           image_dockerfile: "sample/Dockerfile"
           image_context: "sample"
@@ -33,7 +33,6 @@ jobs:
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST"
         uses: ./actions/dockertest/action.yml
-        secrets: inherit
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
           cst_config: "sample/containertest.yaml"
@@ -41,7 +40,6 @@ jobs:
       - name: "DOCKER_SCAN"
         id: "DOCKER_SCAN"
         uses: ./actions/dockerscan/action.yml
-        secrets: inherit
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
 
@@ -54,6 +52,5 @@ jobs:
       - name: "DOCKER_SIGN"
         id: "DOCKER_SIGN"
         uses: ./actions/dockersign/action.yml
-        secrets: inherit
         with:
           image_ref: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
