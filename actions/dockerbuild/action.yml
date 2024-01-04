@@ -1,25 +1,28 @@
 ---
 name: dockerbuild
 
-on:
-  workflow_call:
-    inputs:
-      git_revision:
-        required: false
-        type: string
-        default: HEAD
-      image_dockerfile:
-        required: true
-        type: string
-      image_context:
-        required: true
-        type: string
-      image_name:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+inputs:
+  git_revision:
+    required: false
+    type: string
+    default: HEAD
+  image_dockerfile:
+    required: true
+    type: string
+  image_context:
+    required: true
+    type: string
+  image_name:
+    required: true
+    type: string
+
+outputs:
+  IMAGE_NAME:
+    value: "${{ steps.DOCKER_BUILD.IMAGE_NAME }}"
+  IMAGE_VERSION:
+    value: "${{ steps.DOCKER_BUILD.IMAGE_VERSION }}"
+  IMAGE_URI:
+    value: "${{ steps.DOCKER_BUILD.IMAGE_URI }}"
 
 runs:
   using: composite

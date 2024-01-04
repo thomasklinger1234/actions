@@ -1,26 +1,24 @@
 ---
 name: dockertest
 
-on:
-  workflow_call:
-    inputs:
-      git_revision:
-        required: false
-        type: string
-        default: HEAD
-      image_ref:
-        required: true
-        type: string
-      cst_config:
-        required: true
-        type: string
-      cst_format:
-        required: false
-        type: string
-        default: text
-    secrets:
-      token:
-        required: false
+inputs:
+  git_revision:
+    required: false
+    type: string
+    default: HEAD
+  image_ref:
+    required: true
+    type: string
+  cst_config:
+    required: true
+    type: string
+  cst_format:
+    required: false
+    type: string
+    default: text
+
+outputs: {}
+
 runs:
   using: composite
   steps:

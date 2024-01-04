@@ -1,19 +1,16 @@
 ---
-name: dockersign
+name: dockerrelease
 
-on:
-  workflow_call:
-    inputs:
-      git_revision:
-        required: false
-        type: string
-        default: HEAD
-      image_ref:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+inputs:
+  git_revision:
+    required: false
+    type: string
+    default: HEAD
+  image_ref:
+    required: true
+    type: string
+
+outputs: {}
 
 runs:
   using: composite

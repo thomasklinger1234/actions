@@ -1,19 +1,18 @@
 ---
 name: dockerlint
 
-on:
-  workflow_call:
-    inputs:
-      git_revision:
-        required: false
-        type: string
-        default: HEAD
-      image_dockerfile:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: false
+description: "Docker Lint via Hadolint"
+
+inputs:
+  git_revision:
+    required: false
+    type: string
+    default: HEAD
+  image_dockerfile:
+    required: true
+    type: string
+
+outputs: {}
 
 jobs:
   using: composite
