@@ -28,7 +28,7 @@ runs:
       with:
          dockerfile: ${{ inputs.image_dockerfile }}
          format: sarif
-         output-file: ${{ inputs.image_dockerfile }}.hadolint-results.sarif
+         output-file: hadolint-results.sarif
          no-fail: true
 
     - name: DOCKER_LINT_UPLOAD_RESULTS
@@ -36,4 +36,4 @@ runs:
       if: always()
       continue-on-error: true
       with:
-        sarif_file: ${{ inputs.image_dockerfile }}.hadolint-results.sarif
+        sarif_file: hadolint-results.sarif
