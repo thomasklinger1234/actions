@@ -36,14 +36,14 @@ jobs:
 
       - name: DEBUG
         run: |
-          echo "IMAGE_URI=${{ steps.DOCKER_BUILD_ROOT.outputs.image_uri }}"
-          echo "IMAGE_URI=${{ toJSON(steps.DOCKER_BUILD_ROOT.outputs) }}"
+          echo "IMAGE_URI=${{ env.image_uri }}"
+          echo "IMAGE_URI=${{ env.outputs) }}"
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST_ROOT"
         uses: ./actions/dockertest
         with:
-          image_ref: "${{ steps.DOCKER_BUILD_ROOT.outputs.image_uri }}"
+          image_ref: "${{ env.image_uri }}"
           cst_config: "sample/containertest.yaml"
 
       - name: "DOCKER_SCAN"
