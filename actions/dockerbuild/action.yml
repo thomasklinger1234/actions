@@ -67,5 +67,5 @@ runs:
         echo "image_uri=$IMAGE_NAME:$IMAGE_VERSION" >> $GITHUB_OUTPUT
         
         echo "GITHUB OUTPUT:"
-        echo "$GITHUB_OUTPUT"
+        echo "$(cat $GITHUB_OUTPUT)"
 
