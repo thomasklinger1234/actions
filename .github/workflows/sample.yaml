@@ -32,7 +32,7 @@ jobs:
         with:
           image_dockerfile: "sample/Dockerfile"
           image_context: "sample"
-          image_name: "ghcr.io/${{ github.event.repository.name }}/sample"
+          image_name: "ghcr.io/${{ github.repository }}/sample"
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST_ROOT"
