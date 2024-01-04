@@ -15,31 +15,30 @@ on:
       token:
         required: true
 
-jobs:
-  default:
-    runs-on: ubuntu-latest
-    steps:
-      - name: GIT_CHECKOUT
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: "${{ inputs.git_revision }}"
+runs:
+  using: composite
+  steps:
+    - name: GIT_CHECKOUT
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: "${{ inputs.git_revision }}"
 
-      - name: DOCKER_SCAN_WITH_TRIVY
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: '${{ inputs.image_ref }}'
-          format: 'sarif'
-          exit-code: '0'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
-          output: 'trivy-results.sarif'
-          trivyignores: ".trivyignore"
+    - name: DOCKER_SCAN_WITH_TRIVY
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '${{ inputs.image_ref }}'
+        format: 'sarif'
+        exit-code: '0'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+        output: 'trivy-results.sarif'
+        trivyignores: ".trivyignore"
 
-      - name: DOCKER_SCAN_WITH_TRIVY_UPLOAD_RESULTS
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
+    - name: DOCKER_SCAN_WITH_TRIVY_UPLOAD_RESULTS
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
 

@@ -15,29 +15,28 @@ on:
       token:
         required: true
 
-jobs:
-  default:
-    runs-on: ubuntu-latest
-    steps:
-      - name: GIT_CHECKOUT
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: "${{ inputs.git_revision }}"
+runs:
+  using: composite
+  steps:
+    - name: GIT_CHECKOUT
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: "${{ inputs.git_revision }}"
 
-      - name: CRANE_INSTALL
-        uses: imjasonh/setup-crane@v0.3
+    - name: CRANE_INSTALL
+      uses: imjasonh/setup-crane@v0.3
 
-      - name: COSIGN_INSTALL
-        uses: sigstore/cosign-installer@main
-        with:
-          cosign-release: 'v2.0.2'
+    - name: COSIGN_INSTALL
+      uses: sigstore/cosign-installer@main
+      with:
+        cosign-release: 'v2.0.2'
 
-      - name: COSIGN_SIGN
-        env:
-          COSIGN_EXPERIMENTAL: "1"
-        run: |
-          IMAGE_DIGEST=$(crane digest ${{ inputs.image_ref }})
-          IMAGE_REF="${{ inputs.image_ref }}"
-          
-          cosign sign --yes=true --tlog-upload=false $IMAGE_REF@$IMAGE_DIGEST
+    - name: COSIGN_SIGN
+      env:
+        COSIGN_EXPERIMENTAL: "1"
+      run: |
+        IMAGE_DIGEST=$(crane digest ${{ inputs.image_ref }})
+        IMAGE_REF="${{ inputs.image_ref }}"
+        
+        cosign sign --yes=true --tlog-upload=false $IMAGE_REF@$IMAGE_DIGEST
