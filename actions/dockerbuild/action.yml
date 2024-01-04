@@ -36,6 +36,7 @@ runs:
       id: DOCKER_BUILD
       shell: bash
       run: |
+        IMAGE_NAME="${{ inputs.image_name }}"
         IMAGE_DOCKERFILE="${{ inputs.image_dockerfile }}"
         IMAGE_VERSION="v$(date +%Y%m%d)-$IMAGE_REVISION"
         IMAGE_VERSION_FILE="$(dirname $IMAGE_DOCKERFILE)/IMAGE_VERSION"
