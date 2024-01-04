@@ -37,6 +37,7 @@ jobs:
       - name: DEBUG
         run: |
           echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs.IMAGE_URI }}"
+          echo "IMAGE_URI=${{ steps.DOCKER_BUILD.outputs }}"
 
       - name: "DOCKER_TEST"
         id: "DOCKER_TEST"
