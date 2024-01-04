@@ -5,6 +5,10 @@ inputs:
   image_ref:
     required: true
     type: string
+  cst_version:
+    required: false
+    type: string
+    default: latest
   cst_config:
     required: true
     type: string
@@ -28,7 +32,7 @@ runs:
     - name: DOCKER_TEST_INSTALL
       shell: bash
       run: |
-        curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+        curl -LO https://storage.googleapis.com/container-structure-test/${{ inputs.cst_version }}/container-structure-test-linux-amd64
         chmod +x container-structure-test-linux-amd64
         mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
 
