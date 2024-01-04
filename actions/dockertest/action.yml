@@ -12,14 +12,6 @@ inputs:
   cst_config:
     required: true
     type: string
-  cst_test_output_format:
-    required: false
-    type: string
-    default: text
-  cst_test_report_format:
-    required: false
-    type: string
-    default: json
 
 outputs: {}
 
@@ -39,4 +31,4 @@ runs:
     - name: DOCKER_TEST_RUN
       shell: bash
       run: |
-        container-structure-test test --image ${{ inputs.image_ref }} --config ${{ inputs.cst_config }} --output ${{ inputs.cst_test_output_format }} --test-report ${{ inputs.cst_test_report_format }}
+        container-structure-test test --image ${{ inputs.image_ref }} --config ${{ inputs.cst_config }}
